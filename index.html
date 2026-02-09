@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scango – Scan & Go</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-width: 420px;
+            width: 90%;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: #00ffcc;
+            color: #003333;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,255,204,0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="logo">🛒 Scango</div>
+        <div class="tagline">Smart Scan • Fast Checkout • Zero Queue</div>
+
+        <a href="/scan">
+            <button class="btn">Start Scan & Go</button>
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scango Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+            padding: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            background: white;
+            color: #00b09b;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #00b09b;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .delete {
+            color: red;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    🛒 Scango Admin Panel
+    <a href="/admin/logout" class="logout">Logout</a>
+</div>
+
+<div class="container">
+
+    <!-- ADD PRODUCT -->
+    <div class="card">
+        <h3>Add Product</h3>
+        <form method="POST" action="/add_product">
+            <input name="name" placeholder="Name" required><br><br>
+            <input name="price" type="number" placeholder="Price" required><br><br>
+            <input name="quantity" type="number" placeholder="Quantity" required><br><br>
+            <input name="barcode" placeholder="Barcode" required><br><br>
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+    <!-- PRODUCT TABLE -->
+    <div class="card">
+        <h3>All Products</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Barcode</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+
+            {% for p in products %}
+            <form method="POST" action="/update_product/{{ p.id }}">
+                <tr style="
+                    {% if p.quantity == 0 %}
+                        background-color:#ffcccc;
+                    {% elif p.quantity < 5 %}
+                        background-color:#fff3cd;
+                    {% endif %}
+                ">
+                    <td>{{ p.id }}</td>
+
+                    <td><input name="name" value="{{ p.name }}"></td>
+                    <td><input name="price" type="number" value="{{ p.price }}"></td>
+                    <td><input name="quantity" type="number" value="{{ p.quantity }}"></td>
+                    <td><input name="barcode" value="{{ p.barcode }}"></td>
+
+                    <td><button type="submit">Update</button></td>
+                    <td><a class="delete" href="/delete_product/{{ p.id }}">Delete</a></td>
+                </tr>
+            </form>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

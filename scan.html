@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scango Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        #reader {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .manual {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #00b09b;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .clear {
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">📱 Scango Scan & Go</div>
+
+<div class="container">
+
+    <div id="reader"></div>
+
+    <form method="POST" id="barcodeForm">
+        <input type="hidden" name="barcode" id="barcodeInput">
+    </form>
+
+    <form method="POST" class="manual">
+        <input type="text" name="barcode" placeholder="Enter barcode manually" required>
+        <button type="submit">Add</button>
+    </form>
+    {% if message %}
+<p style="color:red; font-weight:bold; text-align:center;">
+    {{ message }}
+</p>
+{% endif %}
+
+
+    <div class="cart">
+        <h3>Your Cart</h3>
+
+        {% for item in cart %}
+        <div class="item">
+            <span>{{ item.name }}</span>
+            <span>₹{{ item.price }}</span>
+        </div>
+        {% endfor %}
+
+        <div class="total">Total: ₹{{ total }}</div>
+        <a href="/payment"><button>Proceed to Payment</button></a>
+
+
+        <a class="clear" href="/clear">Clear Cart</a>
+    </div>
+</div>
+
+<script>
+function onScanSuccess(decodedText) {
+    document.getElementById("barcodeInput").value = decodedText;
+    document.getElementById("barcodeForm").submit();
+}
+
+let scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+scanner.render(onScanSuccess);
+</script>
+
+</body>
+</html>
